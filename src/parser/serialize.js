@@ -74,30 +74,13 @@ export default function serialize(tokens, options, env, variables) {
         const type = tokens[i].type;
         const nesting = tokens[i].nesting;
 
-        if (typeof(_.last(stack).children) === 'undefined') {
-            console.log('Invalid stack', stack);
-        }
-
         if (type === 'inline') {
-            console.log('Creating children for', _.last(stack));
             _.last(stack).children = serialize(tokens[i].children, options, env, variables).children;
         } else if (typeof rules[type] !== 'undefined') {
             _.last(stack).children.push(rules[type](tokens, i, options, env, variables));
         } else if (nesting === 1) { // start tag
-            if (tokens[i].tag === 'li') {
-                console.log('OPENING', tokens[i]);
-                inLi = true;
-            }
-            else if (inLi) {
-                console.log('item', tokens[i]);
-            }
-
             stack.push({ type: tokens[i].tag, attrs: _.fromPairs(tokens[i].attrs), children: [] });
         } else if (nesting === -1) { // end tag
-            if (tokens[i].tag === 'li') {
-                inLi = false;
-                console.log('CLOSING', tokens[i]);
-            }
             const closing = stack.pop();
             _.last(stack).children.push(closing);
         } else if (nesting === 0) { // self-closing tag

@@ -4560,6 +4560,10 @@ sax@~1.2.1:
   version "1.2.1"
   resolved "https://registry.yarnpkg.com/sax/-/sax-1.2.1.tgz#7b8e656190b228e81a66aea748480d828cd2d37a"
 
+seamless-immutable:
+  version "6.3.0"
+  resolved "https://registry.yarnpkg.com/seamless-immutable/-/seamless-immutable-6.3.0.tgz#218fd851bc5b989505998325f8c7713d35fafeb8"
+
 semver@^4.3.3:
   version "4.3.6"
   resolved "https://registry.yarnpkg.com/semver/-/semver-4.3.6.tgz#300bc6e0e86374f7ba61068b5b1ecd57fc6532da"

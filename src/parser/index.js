@@ -16,6 +16,6 @@ export default class Parser {
         console.log('env', env);
         const ast = serialize(tokens, this.options, env, variables);
         console.log('Ast', ast);
-        return [ast, variables];
+        return { ast, variables };
     }
 }

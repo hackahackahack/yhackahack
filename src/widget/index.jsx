@@ -1,10 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { AppContainer } from 'react-hot-loader';
+import _ from 'lodash';
 
 import Widget from './Widget';
 import Parser from '../parser';
 import configureStore from './store';
+import { addWidget, declareVariables } from './store/actions';
 
 console.groupCollapsed('Locating glass elements');
 let elements = Array.from(document.querySelectorAll('script[type="application/glass"]'), (elt) => {
@@ -15,14 +17,18 @@ let elements = Array.from(document.querySelectorAll('script[type="application/gl
     const container = document.createElement('div');
     const parent = elt.parentNode;
     parent.replaceChild(container, elt);
-    return { container, source };
+    return { container, source, id: _.uniqueId('widget-') };
 });
 console.groupEnd();
 
 const store = configureStore();
 
-function renderWidget({ container, source }) {
-    ReactDOM.render(<AppContainer><Widget source={source} store={store} /></AppContainer>, container);
+for (let elt of elements) {
+    store.dispatch(addWidget(elt.id, elt.source.variables));
+}
+
+function renderWidget({ container, source, id }) {
+    ReactDOM.render(<AppContainer><Widget id={id} source={source} store={store} /></AppContainer>, container);
 }
 
 function renderApp() {

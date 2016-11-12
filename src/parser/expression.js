@@ -8,7 +8,7 @@ function extractDependencies(expr) {
 export default function handleExpression(expr, variables) {
     const parsed = parse(expr);
     if (parsed.is === 'input') {
-        variables.inputs[parsed.name] = { type: parsed.type, default: parsed.default };
+        variables.inputs[parsed.name] = { type: parsed.type, initial: parsed.initial };
     } else if (parsed.is === 'output') {
         const dependencies = extractDependencies(parsed.expr);
         variables.outputs[parsed.name] = { expression: parsed.expr, dependencies };
