@@ -3,12 +3,15 @@ import ReactDOM from 'react-dom';
 import { AppContainer } from 'react-hot-loader';
 
 import Widget from './Widget';
+import Parser from '../parser';
 import configureStore from './store';
 
 console.groupCollapsed('Locating glass elements');
 let elements = Array.from(document.querySelectorAll('script[type="application/glass"]'), (elt) => {
     console.log('Found', elt);
-    const source = elt.textContent; // JSON deserialize? depends how we export
+    const parser = new Parser();
+
+    const source = parser.parse(elt.textContent.trim()); // should be pre-parsed and JSON serialized?
     const container = document.createElement('div');
     const parent = elt.parentNode;
     parent.replaceChild(container, elt);

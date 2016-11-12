@@ -2,6 +2,7 @@ import path from 'path';
 import webpack from 'webpack';
 import ExtractTextWebpackPlugin from 'extract-text-webpack-plugin';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
+import LodashWebpackPlugin from 'lodash-webpack-plugin';
 
 export default {
     context: process.cwd(),
@@ -26,6 +27,7 @@ export default {
                 include: /node_modules/,
             },
             { test: /\.jsx?$/, loader: 'babel-loader', exclude: /node_modules/ },
+            { test: /\.json$/, loader: 'json-loader' },
         ]
     },
 
@@ -35,6 +37,7 @@ export default {
     },
 
     plugins: [
+        new LodashWebpackPlugin(),
         new webpack.LoaderOptionsPlugin({
 			minimize: false,
 			debug: true,
