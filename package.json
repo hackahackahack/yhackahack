@@ -23,6 +23,8 @@
     "json-loader": "^0.5.4",
     "lodash-webpack-plugin": "^0.10.5",
     "node-sass": "^3.11.3",
+    "pegjs": "^0.10.0",
+    "pegjs-loader": "^0.5.0",
     "postcss-browser-reporter": "^0.5.0",
     "postcss-flexbugs-fixes": "^2.0.0",
     "postcss-import": "^8.2.0",

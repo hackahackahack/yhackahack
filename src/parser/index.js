@@ -10,7 +10,7 @@ export default class Parser {
 
     parse(source) {
         const env = {};
-        const variables = {};
+        const variables = { inputs: {}, outputs: {} };
         const tokens = this.md.parse(source, env);
         console.log('Tokens', tokens);
         console.log('env', env);

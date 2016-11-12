@@ -28,6 +28,7 @@ export default {
             },
             { test: /\.jsx?$/, loader: 'babel-loader', exclude: /node_modules/ },
             { test: /\.json$/, loader: 'json-loader' },
+            { test: /\.pegjs$/, loader: 'pegjs-loader' },
         ]
     },
 

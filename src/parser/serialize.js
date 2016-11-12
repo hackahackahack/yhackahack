@@ -1,5 +1,7 @@
 import _ from 'lodash';
 
+import handleExpression from './expression';
+
 function basicToken(token, tag) {
     return { type: tag, attrs: _.fromPairs(token.attrs), children: [token.content] };
 }
@@ -57,8 +59,7 @@ const rules = {
     },
 
     variable_inline(tokens, idx, options, env, variables) {
-        const varName = _.words(tokens[idx].content)[0];
-        variables[varName] = tokens[idx].content;
+        const varName = handleExpression(tokens[idx].content, variables);
         return { type: '@ref', var: varName };
     }
 }

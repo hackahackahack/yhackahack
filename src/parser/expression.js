@@ -1,11 +1,18 @@
-import math from 'math';
-
-const wordExpr = r//;
+import math from 'mathjs';
+import { parse } from './variable.pegjs';
 
 function extractDependencies(expr) {
     return math.parse(expr).filter((node) => node.isSymbolNode).map((node) => node.name);
 }
 
-function declareVariable(expr, variables) {
-    const firstWord =
+export default function handleExpression(expr, variables) {
+    const parsed = parse(expr);
+    if (parsed.is === 'input') {
+        variables.inputs[parsed.name] = { type: parsed.type, default: parsed.default };
+    } else if (parsed.is === 'output') {
+        const dependencies = extractDependencies(parsed.expr);
+        variables.outputs[parsed.name] = { expression: parsed.expr, dependencies };
+    }
+
+    return parsed.name;
 }
