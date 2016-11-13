@@ -4,6 +4,7 @@ import Tether from 'tether';
 import katex from 'katex';
 import 'katex/dist/katex.min.css';
 import './OutputVariable.scss';
+import _ from 'lodash';
 
 import { selectValue, selectTex } from './store/selectors';
 
@@ -21,7 +22,7 @@ class OutputVariable extends React.Component {
             element: this.exprContainer,
             target: this.elt,
             attachment: 'middle left',
-            targetOffset: '0 800px',
+            targetOffset: '0 400px',
             constraints: [
                 { to: 'scrollParent', pin: true }
             ]
@@ -52,7 +53,7 @@ class OutputVariable extends React.Component {
                     ref={(elt) => this.elt = elt}
                     onMouseEnter={this.onEnter.bind(this)}
                     onMouseLeave={this.onLeave.bind(this)}>
-                    { this.props.value }
+                    { _.isNumber(this.props.value) ? Math.floor(this.props.value) : this.props.value }
                 </span>
             </span>
         );

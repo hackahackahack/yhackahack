@@ -33,7 +33,7 @@ export default class Engine {
     }
 
     setValue(state, varName, varValue) {
-        this.checkValue(varValue, state.variables.inputs[varName]);
+        // this.checkValue(varValue, state.variables.inputs[varName]);
         const newValues = _.assign({}, state.values, { [varName]: varValue });
         for (let calculatedVar of Object.keys(state.variables.outputs))
         {

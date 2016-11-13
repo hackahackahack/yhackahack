@@ -1,9 +1,12 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import Tether from 'tether';
 
 import { selectValue, isOutputVariable } from './store/selectors';
 import { setVariable } from './store/actions';
 import OutputVariable from './OutputVariable';
+
+import './Variable.scss';
 
 class Variable extends React.Component {
     constructor() {
@@ -15,12 +18,31 @@ class Variable extends React.Component {
         }
     }
 
+    componentDidMount() {
+        if (!!this.elt) {
+            this.tether = new Tether({
+                element: this.valContainer,
+                target: this.elt,
+                attachment: 'middle left',
+                offset: '0 -800px',
+                constraints: [
+                    { to: 'scrollParent', pin: true }
+                ]
+            });
+        }
+    }
+
+    componentWillUnmount() {
+        if (!!this.tether) {
+            this.tether.destroy();
+        }
+    }
+
     handleMouseEnter() { // when hovered
         this.setState({status: "ready"});
     }
-    handleMouseDown() { //
+    handleMouseDown(e) { //
         this.setState({status: "active"});
-        var e = window.event;
         this.setState({x: e.clientX});
         this.setState({y: e.clientY});
     }
@@ -33,7 +55,7 @@ class Variable extends React.Component {
         if (this.state.status == "active") {
             var newx = event.clientX;
             var value = this.props.value + (newx - this.state.x);
-            this.props.setVariable({value: value});
+            this.props.setVariable(value);
         }
     }
 
@@ -48,13 +70,18 @@ class Variable extends React.Component {
         if (this.props.isOutput) {
             return <OutputVariable widgetId={this.props.widgetId} name={this.props.name} />;
         } else {
-            return <span onMouseEnter = {this.handleMouseEnter.bind(this)}
-                onMouseDown = {this.handleMouseDown.bind(this)}
-                onMouseUp = {this.handleMouseUp.bind(this)}
-                onMouseLeave = {this.handleMouseLeave.bind(this)}
-                onMouseMove = {this.handleMouseMove.bind(this)}>
-                    { this.props.value }
-                </span>;
+            return <span>
+                <span className='InputVariable-value' onMouseEnter = {this.handleMouseEnter.bind(this)}
+                    onMouseDown = {this.handleMouseDown.bind(this)}
+                    onMouseUp = {this.handleMouseUp.bind(this)}
+                    onMouseLeave = {this.handleMouseLeave.bind(this)}
+                    onMouseMove = {this.handleMouseMove.bind(this)}
+                    ref={(elt) => this.elt = elt}
+                    >
+                        { this.props.value }
+                    </span>
+                    <span ref={(elt) => this.valContainer = elt} className='InputVariable-name'>{ this.props.name }</span>
+            </span>;
 		}
     }
 }
