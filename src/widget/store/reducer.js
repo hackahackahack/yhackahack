@@ -32,9 +32,11 @@ export default function reducer(state = initialState, action) {
             return state.set(action.widgetId, initial);
         case SET_VARIABLE:
             engine = engines[action.widgetId];
-            const withNewValue = state.setIn([action.widgetId, 'values', action.name], action.value);
-            const updatedValues = engine.recomputeDependents(action.name, withNewValue[action.widgetId]);
-            return withNewValue.setIn([action.widgetId, 'values'], withNewValue[action.widgetId].values.merge(updatedValues));
+            const newState = engine.setValue(state[action.widgetId], action.name, action.value);
+            return state.set(action.widgetId, newState);
+            // const withNewValue = state.setIn([action.widgetId, 'values', action.name], action.value);
+            // const updatedValues = engine.recomputeDependents(action.name, withNewValue[action.widgetId]);
+            // return withNewValue.setIn([action.widgetId, 'values'], withNewValue[action.widgetId].values.merge(updatedValues));
         default:
             return state;
     }
@@ -42,6 +44,6 @@ export default function reducer(state = initialState, action) {
 
 /*
 {
-type: 'set-variable', widgetId: 'widget-1', name: 'cookies', value: 10
+    type: 'set-variable', widgetId: 'widget-1', name: 'cookies', value: 10
 }
 */
