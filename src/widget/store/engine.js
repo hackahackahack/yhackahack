@@ -4,10 +4,13 @@ import _ from 'lodash';
 export default class Engine {
     constructor() {
         this.outputExpressions = {};
+        this.tex = {};
     }
 
     registerOutput(varName, expr) {
-        this.outputExpressions[varName] = math.compile(expr);
+        const node = math.parse(expr);
+        this.tex[varName] = node.toTex();
+        this.outputExpressions[varName] = node.compile();
     }
 
     registerOutputs(state) {

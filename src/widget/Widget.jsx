@@ -13,7 +13,11 @@ export default class Widget extends React.Component {
         const { ast, variables } = source;
         return (
             <Provider store={store}>
-                <Markup ast={ast} widgetId={id} />
+                <div className="container-fluid">
+                    <div className="col-md-8 col-md-offset-2">
+                        <Markup ast={ast} widgetId={id} />
+                    </div>
+                </div>
             </Provider>
         );
     }
