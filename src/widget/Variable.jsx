@@ -5,33 +5,34 @@ import { selectValue, isOutputVariable } from './store/selectors';
 import OutputVariable from './OutputVariable';
 
 class Variable extends React.Component {
-    constructor() { 
+    constructor() {
+        super();
         this.state = {
-            status: "inactive";
+            status: "inactive"
         }
     }
-    handleMouseEnter() { // when hovered 
-        this.setState({status: "ready"}); 
-    } 
-    handleMouseDown() { // 
-        this.setState({status: "active"}); 
+    handleMouseEnter() { // when hovered
+        this.setState({status: "ready"});
     }
-    handleMouseUp() { // 
+    handleMouseDown() { //
+        this.setState({status: "active"});
+    }
+    handleMouseUp() { //
         this.setState({status: "inactive"});
     }
-    handleMouseLeave() { 
+    handleMouseLeave() {
         if (this.state.status == "ready") {
-            this.setState({status: "inactive"}); 
-        }      
+            this.setState({status: "inactive"});
+        }
     }
 
     render() {
         if (this.props.isOutput) {
             return <OutputVariable widgetId={this.props.widgetId} name={this.props.name} />;
         } else {
-            return <span onMouseEnter = {handleMouseEnter()} 
-                onMouseDown = {handleMouseDown()}
-                onMouseUp = {handleMouseUp()}
+            return <span onMouseEnter = {this.handleMouseEnter.bind(this)}
+                onMouseDown = {this.handleMouseDown.bind(this)}
+                onMouseUp = {this.handleMouseUp.bind(this)}
                 onMouseLeave = {handleMouseLeave()} >
                     { this.props.value }
                 </span>;

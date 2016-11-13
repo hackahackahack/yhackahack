@@ -11,6 +11,7 @@ export default {
 
     entry: {
         'widget': ['react-hot-loader/patch', 'webpack-hot-middleware/client', './src/widget/index.jsx'],
+        'index': ['webpack-hot-middleware/client', './src/index.js'],
     },
 
     output: {
@@ -38,7 +39,7 @@ export default {
             { test: /\.json$/, loader: 'json-loader' },
             { test: /\.pegjs$/, loader: 'pegjs-loader' },
             { test: /\.(png|jpeg|jpg|gif|svg|woff|woff2)$/, loader: 'url-loader?limit=10000' },
-            { test: /\.(eot|ttf|wav|mp3)$/, loader: 'file-loader' },
+            { test: /\.(eot|ttf|wav|mp3|otf)$/, loader: 'file-loader' },
         ]
     },
 
@@ -63,9 +64,14 @@ export default {
 			'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV)
 		}),
         new HtmlWebpackPlugin({
-            filename: 'index.html',
+            filename: 'articles.html',
             chunks: ['common', 'widget'],
             template: 'src/widget/index.html'
+        }),
+        new HtmlWebpackPlugin({
+            filename: 'index.html',
+            chunks: ['common', 'index'],
+            template: 'src/index.html'
         }),
 		new ExtractTextWebpackPlugin('[name].[chunkhash].css'),
     ],
