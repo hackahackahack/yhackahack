@@ -22,7 +22,7 @@ class OutputVariable extends React.Component {
             element: this.exprContainer,
             target: this.elt,
             attachment: 'middle left',
-            targetOffset: '0 400px',
+            targetOffset: '0 600px',
             constraints: [
                 { to: 'scrollParent', pin: true }
             ]

@@ -2,6 +2,7 @@ import React from 'react';
 import { Provider } from 'react-redux';
 
 import Markup from './Markup';
+import './article.scss';
 
 export default class Widget extends React.Component {
     getChildContext() {
@@ -13,11 +14,7 @@ export default class Widget extends React.Component {
         const { ast, variables } = source;
         return (
             <Provider store={store}>
-                <div className="container-fluid">
-                    <div className="col-md-8 col-md-offset-2">
-                        <Markup ast={ast} widgetId={id} />
-                    </div>
-                </div>
+                <Markup ast={ast} widgetId={id} />
             </Provider>
         );
     }

@@ -3,6 +3,7 @@ import webpack from 'webpack';
 import ExtractTextWebpackPlugin from 'extract-text-webpack-plugin';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 import LodashWebpackPlugin from 'lodash-webpack-plugin';
+import CopyWebpackPlugin from 'copy-webpack-plugin';
 
 export default {
     context: process.cwd(),
@@ -74,5 +75,9 @@ export default {
             template: 'src/index.html'
         }),
 		new ExtractTextWebpackPlugin('[name].[chunkhash].css'),
+        new CopyWebpackPlugin([
+            { from: './src/yhack-logo-thickstroke.png', to: 'yhack-logo-thickstroke.png' },
+            { from: './src/mag-glass-hndl.png', to: 'mag-glass-hndl.png' }
+        ])
     ],
 }
