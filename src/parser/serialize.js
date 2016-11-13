@@ -31,7 +31,7 @@ const rules = {
             }
         }
 
-        return { type: 'pre', attrs, children: { type: 'code', children: [token.content] } };
+        return { type: 'pre', attrs, children: [{ type: 'code', children: [token.content] }] };
     },
 
     image(tokens, idx, options, env, variables) {

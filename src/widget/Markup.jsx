@@ -1,20 +1,27 @@
 import React from 'react';
 import _ from 'lodash';
 
-/* 
+import Variable from './Variable';
+
+/*
  * turns JSON tree into react elements (recursively)
- * 
- */ 
+ *
+ */
 function hydrate(astNode) {
     if (_.isString(astNode)) {
         return astNode;
     }
 
     if (!astNode.type.startsWith('@')) { // an HTML thingy (normal stuff)
-        return React.createElement(astNode.type, { ...astNode.attrs, key: JSON.stringify(astNode)}, astNode.children ? astNode.children.map(hydrate) : undefined);
+        return React.createElement(astNode.type, {
+            ..._.omit(astNode.attrs, 'class'),
+            key: JSON.stringify(astNode),
+            className: _.get(astNode, 'attrs.class')
+        }, astNode.children ? astNode.children.map(hydrate) : undefined);
+    } else if(astNode.type === '@html') {
+        return <div dangerouslySetInnerHTML={{ __html: astNode.value }} />
     } else { // special things (aka the point)
-        return <code key={JSON.stringify(astNode)}>{JSON.stringify(astNode)}</code>
-        // TODO: handle variables and dependent 
+        return <Variable name={astNode.var} key={astNode.var} />
     }
 }
 

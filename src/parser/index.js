@@ -14,7 +14,7 @@ export default class Parser {
         const tokens = this.md.parse(source, env);
         console.log('Tokens', tokens);
         console.log('env', env);
-        const ast = serialize(tokens, this.options, env, variables);
+        const ast = serialize(tokens, this.md.options, env, variables);
         console.log('Ast', ast);
         return { ast, variables };
     }
