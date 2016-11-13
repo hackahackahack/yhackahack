@@ -15,7 +15,8 @@ const initialState = Immutable({})
  * },
  * variables: {
  *   same inputs/outputs as from tree
- * }
+ * },
+ * tex: { varname: latex }
  */
 
  const engines = {}; // global state like this kinda super iffy
@@ -28,6 +29,7 @@ export default function reducer(state = initialState, action) {
             engines[action.widgetId] = engine;
             const initial = { variables: action.variables };
             engine.registerOutputs(initial);
+            initial.tex = engine.tex;
             initial.values = engine.computeInitialValues(initial);
             return state.set(action.widgetId, initial);
         case SET_VARIABLE:

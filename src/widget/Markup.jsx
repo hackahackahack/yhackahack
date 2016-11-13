@@ -13,11 +13,12 @@ function hydrate(astNode) {
     }
 
     if (!astNode.type.startsWith('@')) { // an HTML thingy (normal stuff)
-        return React.createElement(astNode.type, {
-            ..._.omit(astNode.attrs, 'class'),
-            key: JSON.stringify(astNode),
-            className: _.get(astNode, 'attrs.class')
-        }, astNode.children ? astNode.children.map(hydrate) : undefined);
+        const attrs = _.assign({ key: JSON.stringify(astNode) }, astNode.attrs);
+        if (_.has(attrs, 'class')) {
+            attrs['className'] = attrs['class'];
+            delete attrs['class'];
+        }
+        return React.createElement(astNode.type, attrs, astNode.children ? astNode.children.map(hydrate) : undefined);
     } else if(astNode.type === '@html') {
         return <div dangerouslySetInnerHTML={{ __html: astNode.value }} />
     } else { // special things (aka the point)

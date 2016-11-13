@@ -1,8 +1,13 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
+<<<<<<< HEAD
 import { selectValue } from './store/selectors';
 import { setVariable } from './store/actions';
+=======
+import { selectValue, isOutputVariable } from './store/selectors';
+import OutputVariable from './OutputVariable';
+>>>>>>> 41d8346541d97ffcf9c5f4aec8c5203b190e9e14
 
 class Variable extends React.Component {
     constructor() { 
@@ -39,20 +44,26 @@ class Variable extends React.Component {
     }
 
     render() {
-        return <span onMouseEnter = {handleMouseEnter(event)} 
+
+        if (this.props.isOutput) {
+            return <OutputVariable widgetId={this.props.widgetId} name={this.props.name} />;
+        } else {
+            return <span onMouseEnter = {handleMouseEnter(event)} 
                 onMouseDown = {handleMouseDown(event)}
                 onMouseUp = {handleMouseUp(event)}
                 onMouseLeave = {handleMouseLeave(event)} 
                 onMouseMove = {handleMouseMove(event)}>
-                    { this.props.value }
-                </span>
-    }
 
+                    { this.props.value }
+                </span>;
+		}
+    }
 }
 
 function mapStateToProps(state, ownProps) {
     return {
         value: selectValue(state, ownProps.widgetId, ownProps.name),
+        isOutput: isOutputVariable(state, ownProps.widgetId, ownProps.name),
     };
 }
 
