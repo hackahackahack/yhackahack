@@ -4,9 +4,35 @@ import { connect } from 'react-redux';
 import { selectValue } from './store/selectors';
 
 class Variable extends React.Component {
-    render() {
-        return <span>{ this.props.value }</span>
+    constructor() { 
+        this.state = {
+            status: "inactive";
+        }
     }
+    handleMouseEnter() { // when hovered 
+        this.setState({status: "ready"}); 
+    } 
+    handleMouseDown() { // 
+        this.setState({status: "active"}); 
+    }
+    handleMouseUp() { // 
+        this.setState({status: "inactive"});
+    }
+    handleMouseLeave() { 
+        if (this.state.status == "ready") {
+            this.setState({status: "inactive"}); 
+        }      
+    }
+
+    render() {
+        return <span onMouseEnter = {handleMouseEnter()} 
+                onMouseDown = {handleMouseDown()}
+                onMouseUp = {handleMouseUp()}
+                onMouseLeave = {handleMouseLeave()} >
+                    { this.props.value }
+                </span>
+    }
+
 }
 
 function mapStateToProps(state, ownProps) {
