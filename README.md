@@ -1,3 +1,3 @@
-# INTERALCT 
+# dataview
 
-A simple web app to check for harmful interactions between medications and alcohol
+Quickly embed the underlying formulas and origins of data on the web. 
